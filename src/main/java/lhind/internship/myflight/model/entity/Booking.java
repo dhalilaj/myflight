@@ -2,6 +2,7 @@ package lhind.internship.myflight.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lhind.internship.myflight.model.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,9 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @NotNull@Enumerated
     @Column(name = "status")
-    private String status;
+    private BookingStatus status;
     @NotNull
     @Column(name = "booking_date")
     private Date bookingDate;

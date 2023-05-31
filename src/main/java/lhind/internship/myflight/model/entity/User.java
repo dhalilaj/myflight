@@ -18,6 +18,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "username")
+    private String username;
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @Column(name = "middle_name")
@@ -46,7 +49,13 @@ public class User {
         this.role = role;
     }
 
-//    First name (Mandatory) • Middle name (Optional)
+    public User(String password, String email, Set<Role> role) {
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+    //    First name (Mandatory) • Middle name (Optional)
 //    • Last name (Mandatory) • Email in email format (e.g., example@gmail.com) (M
 //    andatory) (Unique) • Phone number (Optional) • Address (Optional) • Role (Mandatory)
 
