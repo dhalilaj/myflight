@@ -7,13 +7,10 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Getter
-@Setter
-public class UserDto {
+@Getter@Setter
+public class LoadUser {
     private Long id;
     private String username;
-    @NotNull
-    private String password;
     @NotNull
     private String firstName;
     private String middleName;
@@ -23,6 +20,5 @@ public class UserDto {
     private String email;
     private Integer phoneNumber;
     private String address;
-    private Set<Role> role;
 
 }

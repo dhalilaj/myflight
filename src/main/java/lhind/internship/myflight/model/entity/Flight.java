@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "flight")
@@ -24,23 +25,28 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "airline_code", nullable = false)@Enumerated
+    @Enumerated(EnumType.STRING)
+    @Column(name = "airline_code", nullable = false)
     private AirlineCode airlineCode;
     @Column(name = "flight_number", nullable = false)
     private String flightNumber;
     @Column(name = "origin", nullable = false)
     private String origin;
-    @Column(name = "destination", nullable = false)
+    @Column(name = "destination")
     private String destination;
-    @Column(name = "flight_date", nullable = false)
+    @Column(name = "flight_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date flightDate;
-    @Column(name = "departure_time", nullable = false)
+    @Column(name = "departure_time")
     private Time departureTime;
     @Column(name = "aircraft_type")
     private String aircraftType;
     @Column(name = "seats_available")
     private Integer seatsAvailable;
+
+    @ManyToMany(mappedBy = "flights")
+    private Set<Booking> bookings;
+//    @ManyToMany(mappedBy = "flights")
 
 
 

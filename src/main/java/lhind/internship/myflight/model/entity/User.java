@@ -1,8 +1,8 @@
 package lhind.internship.myflight.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Set;
 
@@ -21,22 +21,30 @@ public class User {
 
     @Column(name = "username")
     private String username;
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")@NotNull
     private String firstName;
     @Column(name = "middle_name")
     private String middleName;
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")@NotNull
     private String lastName;
     @Column(name = "password")
     private String password;
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", unique = true)@NotNull
     private String email;
     @Column(name = "phone_number")
     private Integer phoneNumber;
     @Column(name = "address")
     private String address;
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
     private Set<Role> role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,  fetch = FetchType.LAZY )
+    private Set<Booking> bookings;
 
     public User(String firstName, String middleName, String lastName, String password, String email, Integer phoneNumber, String address, Set<Role> role) {
         this.firstName = firstName;

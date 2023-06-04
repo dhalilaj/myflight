@@ -1,5 +1,5 @@
 package lhind.internship.myflight.model.enums;
 
 public enum BookingStatus {
-    WAITING_FOR_APPROVAL, BOOKED, CANCELLED
+    BOOKED, CANCELLATION_REQUESTED, CANCELLATOIN_APPROVED, CANCELLATOIN_DECLINED
 }

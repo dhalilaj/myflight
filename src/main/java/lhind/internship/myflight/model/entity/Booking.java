@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Set;
@@ -22,18 +23,18 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull@Enumerated
-    @Column(name = "status")
+
+    @Column(name = "status")@NotNull@Enumerated(EnumType.STRING)
     private BookingStatus status;
     @NotNull
-    @Column(name = "booking_date")
+    @Column(name = "booking_date")@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date bookingDate;
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="bookingUser", referencedColumnName = "id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "booking_flight", joinColumns = {
             @JoinColumn(name = "booking_id", referencedColumnName = "id")},
             inverseJoinColumns = {

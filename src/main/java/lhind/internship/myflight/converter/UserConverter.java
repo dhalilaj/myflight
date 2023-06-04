@@ -1,6 +1,5 @@
 package lhind.internship.myflight.converter;
 
-import jakarta.websocket.server.ServerEndpoint;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.User;
 import org.springframework.stereotype.Service;
@@ -9,11 +8,12 @@ import org.springframework.stereotype.Service;
 public class UserConverter {
     public UserDto convertUserToDto (User user){
         UserDto convertedUserDto = new UserDto();
+        convertedUserDto.setId(user.getId());
         convertedUserDto.setFirstName(user.getFirstName());
         convertedUserDto.setMiddleName(user.getMiddleName());
         convertedUserDto.setLastName(user.getLastName());
-        convertedUserDto.setPassword(user.getPassword());
-//        convertedUserDto.setRole(user.getRole());
+//        convertedUserDto.setRole(user.getRole().stream().map(role -> role.getCode()));
+        convertedUserDto.setUsername(user.getUsername());
         convertedUserDto.setAddress(user.getAddress());
         convertedUserDto.setEmail(user.getEmail());
         convertedUserDto.setPhoneNumber(user.getPhoneNumber());
