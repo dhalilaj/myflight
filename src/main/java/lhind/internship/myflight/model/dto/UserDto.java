@@ -3,6 +3,7 @@ package lhind.internship.myflight.model.dto;
 import jakarta.validation.constraints.NotNull;
 import lhind.internship.myflight.model.entity.Role;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;

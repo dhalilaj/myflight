@@ -1,5 +1,6 @@
 package lhind.internship.myflight.services;
 
+import lhind.internship.myflight.model.dto.DisplayUser;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Flight;
@@ -20,7 +21,7 @@ public interface FlightService {
 
     List<UserDto> findTraveller (Long id);
 
-    List<User> findTravelerOfFlight (Long id);
+    List<DisplayUser> findTravelerOfFlight (Long id);
 
 
 }

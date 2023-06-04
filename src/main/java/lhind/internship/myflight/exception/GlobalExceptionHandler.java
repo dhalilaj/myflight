@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.awt.print.Book;
 import java.util.List;
 
 @ControllerAdvice
@@ -44,6 +45,17 @@ public class GlobalExceptionHandler {
         baseResponse.setMessages(List.of("Destination Cannot be the Same as Origin!"));
         return ResponseEntity.status(404).body(baseResponse);
     }
+
+    @ExceptionHandler(BookedFlightException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ResponseEntity<BaseResponse> bookedFlightException() {
+        logger.error("This flight is already booked!");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("This flight is already booked!"));
+        return ResponseEntity.status(404).body(baseResponse);
+    }
+
 
     @ExceptionHandler(FlightDateException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -99,9 +111,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FlightNotBookedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseMsg FlightNotBookedException() {
-        logger.error("This Is Not a Booked Flight");
-        return new ResponseMsg("This Is Not a Booked Flight");
+    public ResponseEntity<BaseResponse>  FlightNotBookedException() {
+        logger.error("There is no booking for this flight!");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("There is no booking for this flight!"));
+        return ResponseEntity.status(404).body(baseResponse);
     }
 
     @ExceptionHandler(UserIdNotFoundExceptoin.class)

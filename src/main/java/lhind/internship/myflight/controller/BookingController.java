@@ -1,9 +1,11 @@
 package lhind.internship.myflight.controller;
 
+import jakarta.validation.Valid;
 import lhind.internship.myflight.exception.BookingNotFoundException;
 import lhind.internship.myflight.exception.UserIdNotFoundExceptoin;
 import lhind.internship.myflight.model.dto.BookingDto;
 import lhind.internship.myflight.model.dto.ResponseMsg;
+import lhind.internship.myflight.model.entity.Booking;
 import lhind.internship.myflight.services.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +44,13 @@ public class BookingController {
         bookingService.decline(id);
         return ResponseEntity.ok(new ResponseMsg(reasom));
 
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createBooking (@Valid @RequestBody BookingDto bookingDto)
+    {
+        bookingService.createBooking(bookingDto);
+        return ResponseEntity.ok(new ResponseMsg("Booking Created successfully"));
     }
 
 

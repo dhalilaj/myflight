@@ -3,16 +3,15 @@ package lhind.internship.myflight.services.impl;
 import lhind.internship.myflight.converter.FlightConverter;
 import lhind.internship.myflight.converter.UserConverter;
 import lhind.internship.myflight.exception.*;
+import lhind.internship.myflight.model.dto.DisplayUser;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Flight;
-import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import lhind.internship.myflight.repository.BookingRepository;
 import lhind.internship.myflight.repository.FlightRepository;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.FlightService;
-import org.hibernate.grammars.hql.HqlParser;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.zip.DataFormatException;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -93,10 +91,10 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void deleteFlight(Long id) throws FlightNotBookedException {
+    public void deleteFlight(Long id) throws BookedFlightException , FlightNotFoudException {
         Flight flight = flightRepository.findById(id).orElseThrow(() -> new FlightNotFoudException(id));
         if (flight.getBookings().size() > 0) {
-            throw new FlightNotBookedException(id);
+            throw new BookedFlightException();
         } else {
             flightRepository.deleteById(id);
         }
@@ -104,24 +102,24 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void updateFlight(FlightDto flightDto) throws FlightNotFoudException, FlightNotBookedException {
+    public void updateFlight(FlightDto flightDto) throws FlightNotFoudException, BookedFlightException {
         Flight flight = flightRepository.findById(flightDto.getId()).orElseThrow(() -> new FlightNotFoudException(flightDto.getId()));
 
         if (flight.getBookings().size() > 0) {
-            Flight booked = flightRepository.findById(flightDto.getId()).orElseThrow(() -> new FlightNotBookedException(flightDto.getId()));
-            booked.setDepartureTime(flightDto.getDepartureTime());
-            flightRepository.save(booked);
+            flight.setDepartureTime(flightDto.getDepartureTime());
+            flightRepository.save(flight);
         } else {
-            Flight notBooked = flightRepository.findById(flightDto.getId()).orElseThrow(() -> new FlightNotBookedException(flightDto.getId()));
-            notBooked.setFlightDate(flightDto.getFlightDate());
-            notBooked.setFlightNumber(flightDto.getFlightNumber());
-            notBooked.setAircraftType(flightDto.getAircraftType());
-            notBooked.setOrigin(flightDto.getOrigin());
-            notBooked.setDestination(flightDto.getDestination());
-            notBooked.setAirlineCode(flightDto.getAirlineCode());
-            notBooked.setDepartureTime(flightDto.getDepartureTime());
-            notBooked.setSeatsAvailable(flightDto.getSeatsAvailable());
-            flightRepository.save(notBooked);
+
+            //add converter
+            flight.setFlightDate(flightDto.getFlightDate());
+            flight.setFlightNumber(flightDto.getFlightNumber());
+            flight.setAircraftType(flightDto.getAircraftType());
+            flight.setOrigin(flightDto.getOrigin());
+            flight.setDestination(flightDto.getDestination());
+            flight.setAirlineCode(flightDto.getAirlineCode());
+            flight.setDepartureTime(flightDto.getDepartureTime());
+            flight.setSeatsAvailable(flightDto.getSeatsAvailable());
+            flightRepository.save(flight);
         }
     }
 
@@ -145,9 +143,9 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<User> findTravelerOfFlight(Long id) {
+    public List<DisplayUser> findTravelerOfFlight(Long id) {
 
-        List<User> userList = flightRepository.findTravelerOfFlight(id);
+        List<DisplayUser> userList = flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
 //        List<UserDto> userDtos = flightRepository.findTravelerOfFlight(id).stream()
 //                .map(userConverter::convertUserToDto).collect(Collectors.toList());
 
@@ -155,7 +153,7 @@ public class FlightServiceImpl implements FlightService {
 
 //        List<UserDto> userDtos= userRepository.findById(flightRepository.findTravelerOfFlight(id)).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
         if (userList.isEmpty()) {
-            throw new RuntimeException("No Users have Booked this Flight");
+            throw new FlightNotBookedException();
         } else {
             return userList;
         }

@@ -27,7 +27,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/createUser")
+    @PostMapping
     @PreAuthorize(value = "hasAnyRole('ADMIN')")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PreAuthorize(value = "hasAnyRole('ADMIN')")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<UserDto>> findAllUsers (){
         return ResponseEntity.ok(userService.findAll());
     }

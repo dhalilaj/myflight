@@ -13,6 +13,7 @@ public class UserConverter {
         convertedUserDto.setMiddleName(user.getMiddleName());
         convertedUserDto.setLastName(user.getLastName());
 //        convertedUserDto.setRole(user.getRole().stream().map(role -> role.getCode()));
+        convertedUserDto.setRole(user.getRole());
         convertedUserDto.setUsername(user.getUsername());
         convertedUserDto.setAddress(user.getAddress());
         convertedUserDto.setEmail(user.getEmail());

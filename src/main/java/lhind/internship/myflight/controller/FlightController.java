@@ -1,8 +1,10 @@
 package lhind.internship.myflight.controller;
 
 import jakarta.validation.Valid;
+import lhind.internship.myflight.exception.BookedFlightException;
 import lhind.internship.myflight.exception.FlightNotBookedException;
 import lhind.internship.myflight.exception.FlightNotFoudException;
+import lhind.internship.myflight.model.dto.DisplayUser;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.dto.UserDto;
@@ -32,14 +34,14 @@ public class FlightController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFlight(@PathVariable Long id) throws FlightNotBookedException {
+    public ResponseEntity<?> deleteFlight(@PathVariable Long id) throws BookedFlightException {
         flightService.deleteFlight(id);
         return ResponseEntity.ok(new ResponseMsg("Flight deleted!"));
 
     }
 
     @PutMapping
-    public ResponseEntity<?> updateFlight(@Valid@RequestBody FlightDto flightDto) throws FlightNotBookedException, FlightNotFoudException {
+    public ResponseEntity<?> updateFlight(@Valid@RequestBody FlightDto flightDto) throws BookedFlightException, FlightNotFoudException {
         flightService.updateFlight(flightDto);
         return ResponseEntity.ok("Flight updated successfully!");
     }
@@ -50,7 +52,7 @@ public class FlightController {
     }
 
     @GetMapping("/travellers/{id}")
-    public List<User> findTravelerOfFlight (@PathVariable Long id){
+    public List<DisplayUser> findTravelerOfFlight (@PathVariable Long id){
         return flightService.findTravelerOfFlight(id);
     }
 }
