@@ -1,7 +1,6 @@
 package lhind.internship.myflight.exception;
 
 import lhind.internship.myflight.model.dto.BaseResponse;
-import lhind.internship.myflight.model.dto.ResponseMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @ControllerAdvice
@@ -105,15 +103,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BookingNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseMsg BookingNotFoundException() {
-        logger.error("Booking not found");
-        return new ResponseMsg("Booking not found");
+    public ResponseEntity<BaseResponse> bookingNotFoundException() {
+        logger.error("Booking not found!");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("Booking not found!"));
+        return ResponseEntity.status(404).body(baseResponse);
     }
-
     @ExceptionHandler(FlightNotBookedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseEntity<BaseResponse>  FlightNotBookedException() {
+    public ResponseEntity<BaseResponse>  flightNotBookedException() {
         logger.error("There is no booking for this flight!");
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setMessages(List.of("There is no booking for this flight!"));
@@ -131,9 +130,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CannotCancelBookingException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseMsg CannotCancelBookingException() {
-        logger.error("Booking Cannot Be Cancelled");
-        return new ResponseMsg("Booking Cannot Be Cancelled");
+    public ResponseEntity<BaseResponse>  cannotCancelBookingException() {
+        logger.error("Booking Cannot Be Cancelled!");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("Booking Cannot Be Cancelled!"));
+        return ResponseEntity.status(404).body(baseResponse);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ResponseEntity<BaseResponse>  emailAlreadyExistsException() {
+        logger.error("User with this email already exists!");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("User with this email already exists!"));
+        return ResponseEntity.status(404).body(baseResponse);
     }
 
 }

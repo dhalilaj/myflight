@@ -92,7 +92,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void deleteFlight(Long id) throws BookedFlightException , FlightNotFoudException {
-        Flight flight = flightRepository.findById(id).orElseThrow(() -> new FlightNotFoudException(id));
+        Flight flight = flightRepository.findById(id).orElseThrow(() -> new FlightNotFoudException());
         if (flight.getBookings().size() > 0) {
             throw new BookedFlightException();
         } else {
@@ -103,7 +103,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void updateFlight(FlightDto flightDto) throws FlightNotFoudException, BookedFlightException {
-        Flight flight = flightRepository.findById(flightDto.getId()).orElseThrow(() -> new FlightNotFoudException(flightDto.getId()));
+        Flight flight = flightRepository.findById(flightDto.getId()).orElseThrow(() -> new FlightNotFoudException());
 
         if (flight.getBookings().size() > 0) {
             flight.setDepartureTime(flightDto.getDepartureTime());

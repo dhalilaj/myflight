@@ -1,8 +1,14 @@
 package lhind.internship.myflight.converter;
 
 import lhind.internship.myflight.model.dto.UserDto;
+import lhind.internship.myflight.model.entity.Role;
 import lhind.internship.myflight.model.entity.User;
+import lhind.internship.myflight.model.enums.RoleName;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserConverter {

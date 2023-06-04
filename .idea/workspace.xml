@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76f02fd2-5c1b-4c6a-bd51-31789d725505" name="Changes" comment="validate">
+    <list default="true" id="76f02fd2-5c1b-4c6a-bd51-31789d725505" name="Changes" comment="cleanup">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/EmailAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/model/dto/CreateBookingRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/FlightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/FlightController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/converter/UserConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/converter/UserConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/BookingNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/BookingNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/CannotCancelBookingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/CannotCancelBookingException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/FlightNotFoudException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/FlightNotFoudException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/UserIdNotFoundExceptoin.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/UserNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/model/dto/DisplayUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/model/dto/DisplayUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/BookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/FlightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/FlightService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/CustomUserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/FlightServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/FlightServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
@@ -101,7 +110,7 @@
       <workItem from="1685025990240" duration="9994000" />
       <workItem from="1685453466656" duration="6058000" />
       <workItem from="1685483912830" duration="30115000" />
-      <workItem from="1685734680159" duration="64873000" />
+      <workItem from="1685734680159" duration="70265000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <created>1685484092270</created>
@@ -138,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685909059596</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="cleanup">
+      <created>1685910232793</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1685910232793</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,7 +178,24 @@
     <MESSAGE value="controllers" />
     <MESSAGE value="validations + create booking test" />
     <MESSAGE value="validate" />
-    <option name="LAST_COMMIT_MESSAGE" value="validate" />
+    <MESSAGE value="cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java</url>
+          <line>145</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/myflight$MyflightApplication.ic" NAME="MyflightApplication Coverage Results" MODIFIED="1685791819769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

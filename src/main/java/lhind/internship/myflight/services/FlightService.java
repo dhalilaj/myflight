@@ -3,10 +3,7 @@ package lhind.internship.myflight.services;
 import lhind.internship.myflight.model.dto.DisplayUser;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.UserDto;
-import lhind.internship.myflight.model.entity.Flight;
-import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.AirlineCode;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;

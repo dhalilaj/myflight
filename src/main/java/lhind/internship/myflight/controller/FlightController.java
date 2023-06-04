@@ -2,13 +2,10 @@ package lhind.internship.myflight.controller;
 
 import jakarta.validation.Valid;
 import lhind.internship.myflight.exception.BookedFlightException;
-import lhind.internship.myflight.exception.FlightNotBookedException;
 import lhind.internship.myflight.exception.FlightNotFoudException;
 import lhind.internship.myflight.model.dto.DisplayUser;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.ResponseMsg;
-import lhind.internship.myflight.model.dto.UserDto;
-import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import lhind.internship.myflight.services.FlightService;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/flight")
 public class FlightController {
 
-    public  FlightService flightService;
+    private final FlightService flightService;
 
     public FlightController(FlightService flightService) {
         this.flightService = flightService;

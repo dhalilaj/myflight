@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lhind.internship.myflight.exception.BookingNotFoundException;
 import lhind.internship.myflight.exception.UserNotFoundException;
 import lhind.internship.myflight.model.dto.BookingDto;
+import lhind.internship.myflight.model.dto.CreateBookingRequest;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.services.BookingService;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/booking")
 public class BookingController {
-    public final BookingService bookingService;
+    private final BookingService bookingService;
+
+
 
     public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
@@ -46,9 +49,9 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createBooking (@Valid @RequestBody BookingDto bookingDto)
+    public ResponseEntity<?> createBooking (@Valid @RequestBody CreateBookingRequest createBookingRequest)
     {
-        bookingService.createBooking(bookingDto);
+        bookingService.createBooking(createBookingRequest);
         return ResponseEntity.ok(new ResponseMsg("Booking Created successfully"));
     }
 

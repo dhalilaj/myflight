@@ -1,5 +1,6 @@
 package lhind.internship.myflight.services.impl;
 
+import lhind.internship.myflight.exception.EmailNotFoundException;
 import lhind.internship.myflight.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

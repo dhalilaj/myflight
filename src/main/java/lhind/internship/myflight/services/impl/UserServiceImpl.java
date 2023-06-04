@@ -1,7 +1,9 @@
 package lhind.internship.myflight.services.impl;
 
 import lhind.internship.myflight.converter.UserConverter;
+import lhind.internship.myflight.exception.EmailAlreadyExistsException;
 import lhind.internship.myflight.exception.UserNotFoundException;
+import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Role;
 import lhind.internship.myflight.model.entity.User;
@@ -9,6 +11,7 @@ import lhind.internship.myflight.model.enums.RoleName;
 import lhind.internship.myflight.repository.RoleRepository;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,24 +55,29 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @Override
-    public List<UserDto> findAllByEmail(String email) {
-        return userRepository.findAllByEmail(email).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<UserDto> findAllByEmail(String email) {
+//        return userRepository.findAllByEmail(email).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
+//    }
 
     @Override
     public void createUser(UserDto userDto) {
 
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new EmailAlreadyExistsException();
+        }
 
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setEmail(userDto.getEmail());
-        user.setFirstName(userDto.getFirstName());
-        user.setMiddleName(userDto.getMiddleName());
-        user.setLastName(userDto.getLastName());
-        user.setAddress(userDto.getAddress());
-        user.setPhoneNumber(userDto.getPhoneNumber());
+//        User user = new User();
+        User user = userConverter.convertUserToEntity(userDto);
+
+//        user.setUsername(userDto.getUsername());
+//        user.setPassword(encoder.encode(userDto.getPassword()));
+//        user.setEmail(userDto.getEmail());
+//        user.setFirstName(userDto.getFirstName());
+//        user.setMiddleName(userDto.getMiddleName());
+//        user.setLastName(userDto.getLastName());
+//        user.setAddress(userDto.getAddress());
+//        user.setPhoneNumber(userDto.getPhoneNumber());
         Set<Role> roles = new HashSet<>(Arrays.asList(roleRepository.findByCode(RoleName.TRAVELLER).get()));
         user.setRole(roles);
 
