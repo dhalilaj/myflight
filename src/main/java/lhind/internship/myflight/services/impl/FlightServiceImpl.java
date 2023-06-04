@@ -111,15 +111,7 @@ public class FlightServiceImpl implements FlightService {
         } else {
 
             flight=flightConverter.convertFlightToEntity(flightDto);
-            //add converter
-//            flight.setFlightDate(flightDto.getFlightDate());
-//            flight.setFlightNumber(flightDto.getFlightNumber());
-//            flight.setAircraftType(flightDto.getAircraftType());
-//            flight.setOrigin(flightDto.getOrigin());
-//            flight.setDestination(flightDto.getDestination());
-//            flight.setAirlineCode(flightDto.getAirlineCode());
-//            flight.setDepartureTime(flightDto.getDepartureTime());
-//            flight.setSeatsAvailable(flightDto.getSeatsAvailable());
+
             flightRepository.save(flight);
         }
     }
@@ -135,24 +127,16 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<UserDto> findTraveller(Long id) {
-//        FlightDto flightDto = flightRepository.findById(id).stream().map(flight -> flightConverter.convertFlightToDto(flight)).findAny().orElseThrow(() -> new FlightNotBookedException(id));
-//
-//        bookingRepository.f
-//        userRepository.findById()
-        return null;
-    }
-
-    @Override
     public List<DisplayUser> findTravelerOfFlight(Long id) {
 
-        List<DisplayUser> userList = flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
+//        List<DisplayUser> userList = flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
+        return flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
 
-        if (userList.isEmpty()) {
-            throw new FlightNotBookedException();
-        } else {
-            return userList;
-        }
+//        if (userList.isEmpty()) {
+//            throw new FlightNotBookedException();
+//        } else {
+//            return userList;
+//        }
 //        return null;
     }
 

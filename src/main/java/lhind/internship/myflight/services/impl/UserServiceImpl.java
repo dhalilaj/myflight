@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(UserDto userDto) {
 
-        if (userRepository.existsByEmail(userDto.getEmail())) {
+        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException();
         }
 
@@ -78,7 +78,9 @@ public class UserServiceImpl implements UserService {
 //        user.setLastName(userDto.getLastName());
 //        user.setAddress(userDto.getAddress());
 //        user.setPhoneNumber(userDto.getPhoneNumber());
+
         Set<Role> roles = new HashSet<>(Arrays.asList(roleRepository.findByCode(RoleName.TRAVELLER).get()));
+
         user.setRole(roles);
 
         this.userRepository.save(user);

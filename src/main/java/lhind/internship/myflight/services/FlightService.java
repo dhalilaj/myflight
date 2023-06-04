@@ -16,8 +16,6 @@ public interface FlightService {
 
     List<FlightDto> findFlightCustom ( AirlineCode airlineCode, String origin, String destination, Date flightDate);
 
-    List<UserDto> findTraveller (Long id);
-
     List<DisplayUser> findTravelerOfFlight (Long id);
 
 

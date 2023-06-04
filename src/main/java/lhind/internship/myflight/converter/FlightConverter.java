@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class FlightConverter {
     public FlightDto convertFlightToDto(Flight flight) {
         FlightDto convertedFlightDto = new FlightDto();
+        convertedFlightDto.setId(flight.getId());
         convertedFlightDto.setFlightDate(flight.getFlightDate());
         convertedFlightDto.setFlightNumber(flight.getFlightNumber());
         convertedFlightDto.setAircraftType(flight.getAircraftType());

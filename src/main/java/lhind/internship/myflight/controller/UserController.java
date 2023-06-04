@@ -28,9 +28,6 @@ public class UserController {
     @PostMapping
     @PreAuthorize(value = "hasAnyRole('ADMIN')")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto) {
-        if (userRepository.existsByEmail(userDto.getEmail())) {
-            return ResponseEntity.badRequest().body(new ResponseMsg("Error: User with this email already exists!"));
-        }
         this.userService.createUser(userDto);
         return ResponseEntity.ok(new ResponseMsg("User added successfully!"));
     }
@@ -46,6 +43,7 @@ public class UserController {
 //        userService.deleteUserByEmail(email);
 //        return ResponseEntity.ok(new ResponseMsg("User deleted"));
 //    }
+@PreAuthorize(value = "hasAnyRole('ADMIN')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
@@ -53,11 +51,13 @@ public class UserController {
         return ResponseEntity.ok(new ResponseMsg("User deleted"));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @GetMapping("/{email}")
     public UserDto findByEmail(@PathVariable String email) throws UserNotFoundException {
         return userService.findByEmail(email);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updateUser (@RequestBody UserDto userDto) throws UserNotFoundException{
         userService.updateUser(userDto);
