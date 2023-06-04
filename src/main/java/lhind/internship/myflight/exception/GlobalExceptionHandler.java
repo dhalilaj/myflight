@@ -22,9 +22,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseMsg tripDoesNotExistException() {
+    public ResponseEntity<BaseResponse> userNotFoundException() {
         logger.error("User Does Not Exist");
-        return new ResponseMsg("User Does Not Exist");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("User Does Not Exist"));
+        return ResponseEntity.status(404).body(baseResponse);
     }
 
     @ExceptionHandler(FlightNotFoudException.class)
@@ -118,13 +120,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(baseResponse);
     }
 
-    @ExceptionHandler(UserIdNotFoundExceptoin.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public ResponseMsg UserIdNotFoundExceptoin() {
-        logger.error("User Does Not Exist");
-        return new ResponseMsg("User Does Not Exist");
-    }
+//    @ExceptionHandler(UserIdNotFoundExceptoin.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ResponseBody
+//    public ResponseMsg UserIdNotFoundExceptoin() {
+//        logger.error("User Does Not Exist");
+//        return new ResponseMsg("User Does Not Exist");
+//    }
 
     @ExceptionHandler(CannotCancelBookingException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

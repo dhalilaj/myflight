@@ -40,11 +40,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDto> findBookingByUserId(Long id) throws UserIdNotFoundExceptoin {
+    public List<BookingDto> findBookingByUserId(Long id) throws UserNotFoundException {
 
 //        UserDto userDto = userRepository.findById(id).map(user -> userConverter.convertUserToDto(user)).orElseThrow(()-> new UserIdNotFoundExceptoin(id));
 //                .collect(Collectors.toList());
-        User user = userRepository.findById(id).orElseThrow(() -> new UserIdNotFoundExceptoin(id));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
 //        UserDto userDto = userConverter.convertUserToDto(user);
 
         List<BookingDto> bookingDto = bookingRepository.findByUser(user).stream().map(booking -> bookingConverter.convertBookingToDto((booking))).collect(Collectors.toList());

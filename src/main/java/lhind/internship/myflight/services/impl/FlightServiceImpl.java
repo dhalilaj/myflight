@@ -110,15 +110,16 @@ public class FlightServiceImpl implements FlightService {
             flightRepository.save(flight);
         } else {
 
+            flight=flightConverter.convertFlightToEntity(flightDto);
             //add converter
-            flight.setFlightDate(flightDto.getFlightDate());
-            flight.setFlightNumber(flightDto.getFlightNumber());
-            flight.setAircraftType(flightDto.getAircraftType());
-            flight.setOrigin(flightDto.getOrigin());
-            flight.setDestination(flightDto.getDestination());
-            flight.setAirlineCode(flightDto.getAirlineCode());
-            flight.setDepartureTime(flightDto.getDepartureTime());
-            flight.setSeatsAvailable(flightDto.getSeatsAvailable());
+//            flight.setFlightDate(flightDto.getFlightDate());
+//            flight.setFlightNumber(flightDto.getFlightNumber());
+//            flight.setAircraftType(flightDto.getAircraftType());
+//            flight.setOrigin(flightDto.getOrigin());
+//            flight.setDestination(flightDto.getDestination());
+//            flight.setAirlineCode(flightDto.getAirlineCode());
+//            flight.setDepartureTime(flightDto.getDepartureTime());
+//            flight.setSeatsAvailable(flightDto.getSeatsAvailable());
             flightRepository.save(flight);
         }
     }
@@ -146,12 +147,7 @@ public class FlightServiceImpl implements FlightService {
     public List<DisplayUser> findTravelerOfFlight(Long id) {
 
         List<DisplayUser> userList = flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
-//        List<UserDto> userDtos = flightRepository.findTravelerOfFlight(id).stream()
-//                .map(userConverter::convertUserToDto).collect(Collectors.toList());
 
-//        User user= userRepository.findById(flightRepository.findTravelerOfFlight(id)).orElseThrow(() -> new UserIdNotFoundExceptoin(flightRepository.findTravelerOfFlight(id)));
-
-//        List<UserDto> userDtos= userRepository.findById(flightRepository.findTravelerOfFlight(id)).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
         if (userList.isEmpty()) {
             throw new FlightNotBookedException();
         } else {

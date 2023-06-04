@@ -1,11 +1,9 @@
 package lhind.internship.myflight.controller;
 
 import jakarta.validation.Valid;
-import lhind.internship.myflight.exception.UserIdNotFoundExceptoin;
 import lhind.internship.myflight.exception.UserNotFoundException;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.dto.UserDto;
-import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +59,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser (@RequestBody UserDto userDto) throws UserIdNotFoundExceptoin{
+    public ResponseEntity<?> updateUser (@RequestBody UserDto userDto) throws UserNotFoundException{
         userService.updateUser(userDto);
         return  ResponseEntity.ok(new ResponseMsg("User updated successfully"));
     }

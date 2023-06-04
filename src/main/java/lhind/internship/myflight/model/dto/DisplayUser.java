@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
-@Service
 public class DisplayUser {
 
     private String username;

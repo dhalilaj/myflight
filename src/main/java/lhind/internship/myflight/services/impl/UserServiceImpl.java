@@ -1,13 +1,11 @@
 package lhind.internship.myflight.services.impl;
 
 import lhind.internship.myflight.converter.UserConverter;
-import lhind.internship.myflight.exception.UserIdNotFoundExceptoin;
 import lhind.internship.myflight.exception.UserNotFoundException;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Role;
 import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.RoleName;
-import lhind.internship.myflight.repository.FlightRepository;
 import lhind.internship.myflight.repository.RoleRepository;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.UserService;
@@ -44,13 +42,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("NotFound"));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
         userRepository.delete(user);
     }
 
     @Override
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserIdNotFoundExceptoin(id));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
         userRepository.delete(user);
     }
 
@@ -80,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findByEmail(String email) throws UserNotFoundException {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User Not Found"));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
         UserDto userDto = userConverter.convertUserToDto(user);
 
 
@@ -89,16 +87,18 @@ public class UserServiceImpl implements UserService {
     }
 
     public void updateUser(UserDto userDto) {
-        User user = userRepository.findById(userDto.getId()).orElseThrow(() -> new UserIdNotFoundExceptoin(userDto.getId()));
+        User user = userRepository.findById(userDto.getId()).orElseThrow(() -> new UserNotFoundException());
 
-        user.setFirstName(userDto.getFirstName());
-        user.setMiddleName(userDto.getMiddleName());
-        user.setLastName(userDto.getLastName());
-        user.setRole(userDto.getRole());
-        user.setUsername(userDto.getUsername());
-        user.setAddress(userDto.getAddress());
-        user.setEmail(userDto.getEmail());
-        user.setPhoneNumber(userDto.getPhoneNumber());
+        user = userConverter.convertUserToEntity(userDto);
+
+//        user.setFirstName(userDto.getFirstName());
+//        user.setMiddleName(userDto.getMiddleName());
+//        user.setLastName(userDto.getLastName());
+//        user.setRole(userDto.getRole());
+//        user.setUsername(userDto.getUsername());
+//        user.setAddress(userDto.getAddress());
+//        user.setEmail(userDto.getEmail());
+//        user.setPhoneNumber(userDto.getPhoneNumber());
 
         userRepository.save(user);
     }
