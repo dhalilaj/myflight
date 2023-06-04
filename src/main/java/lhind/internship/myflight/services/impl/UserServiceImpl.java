@@ -7,6 +7,7 @@ import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Role;
 import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.RoleName;
+import lhind.internship.myflight.repository.FlightRepository;
 import lhind.internship.myflight.repository.RoleRepository;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.UserService;
@@ -81,16 +82,11 @@ public class UserServiceImpl implements UserService {
     public UserDto findByEmail(String email) throws UserNotFoundException {
         User user = userRepository.findByEmail(email);
         UserDto userDto = userConverter.convertUserToDto(user);
+
+
 //        return userRepository.findByEmail(email).map(userConverter::convertUserToDto).orElseThrow(UserNotFoundException::new);
         return userDto;
     }
-
-//    public User updateUser(String email, String firstName, String middleName, String lastName, String password, Integer phoneNumber, String address, Set<Role> role) {
-//        User user = userRepository.findAllByEmail(email).stream()
-//                .map(userDto -> userConverter.convertUserToEntity(userDto))
-//                .collect(Collectors.toList());
-//        return user;
-//    }
 
     public void updateUser(UserDto userDto) {
         User user = userRepository.findById(userDto.getId()).orElseThrow(() -> new UserIdNotFoundExceptoin(userDto.getId()));

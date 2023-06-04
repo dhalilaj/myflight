@@ -18,12 +18,8 @@ public interface FlightRepository extends JpaRepository <Flight,Long> {
     Optional<Flight> findBookedFlight (Long id);
 
 
-//    @Query(value = "Select  booking.booking_user user_id from booking inner join user_role on booking.booking_user= user_role.user_id inner join booking_flight on booking.id=booking_flight.booking_id where user_role.role_id= 2 and booking_flight.flight_id= :id;", nativeQuery = true)
-//    Long findTravelerOfFlight (Long id);
-
-    @Query(value = "Select  user.* from user inner join booking on user.id= booking.booking_user inner join user_role on booking.booking_user= user_role.user_id inner join booking_flight on booking.id=booking_flight.booking_id where user_role.role_id=2 and booking_flight.flight_id= :id;", nativeQuery = true)
+    @Query(value = "Select  user.* from user inner join booking on user.id= booking.booking_user inner join user_role on booking.booking_user= user_role.user_id inner join booking_flight on booking.id=booking_flight.booking_id where user_role.role_id=2 and booking_flight.flight_id= :id", nativeQuery = true)
     List<User> findTravelerOfFlight (Long id);
-
 
 
     @Query("SELECT e FROM Flight e WHERE e.airlineCode = :airlineCode OR :airlineCode IS NULL and e.origin = :origin and e. destination = :destination and e.flightDate= :flightDate")

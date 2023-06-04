@@ -3,6 +3,7 @@ package lhind.internship.myflight.services;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Flight;
+import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import org.springframework.data.repository.query.Param;
 
@@ -19,7 +20,7 @@ public interface FlightService {
 
     List<UserDto> findTraveller (Long id);
 
-    List<UserDto> findTravelerOfFlight (Long id);
+    List<User> findTravelerOfFlight (Long id);
 
 
 }

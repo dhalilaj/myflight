@@ -6,6 +6,7 @@ import lhind.internship.myflight.exception.FlightNotFoudException;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.dto.UserDto;
+import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import lhind.internship.myflight.services.FlightService;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class FlightController {
     }
 
     @GetMapping("/travellers/{id}")
-    public List<UserDto> findTravelerOfFlight (@PathVariable Long id){
+    public List<User> findTravelerOfFlight (@PathVariable Long id){
         return flightService.findTravelerOfFlight(id);
     }
 }

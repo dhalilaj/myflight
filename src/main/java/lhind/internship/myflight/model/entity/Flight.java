@@ -1,12 +1,12 @@
 package lhind.internship.myflight.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Time;
@@ -26,18 +26,18 @@ public class Flight {
     @Column(name = "id")
     private Long id;
     @Enumerated(EnumType.STRING)
-    @Column(name = "airline_code", nullable = false)
+    @Column(name = "airline_code") @NotNull
     private AirlineCode airlineCode;
-    @Column(name = "flight_number", nullable = false)
+    @Column(name = "flight_number") @NotNull
     private String flightNumber;
-    @Column(name = "origin", nullable = false)
+    @Column(name = "origin", length = 3) @NotNull
     private String origin;
-    @Column(name = "destination")
+    @Column(name = "destination", length = 3)@NotNull
     private String destination;
-    @Column(name = "flight_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "flight_date")@NotNull
+    @Temporal(value = TemporalType.DATE)
     private Date flightDate;
-    @Column(name = "departure_time")
+    @Column(name = "departure_time")@NotNull
     private Time departureTime;
     @Column(name = "aircraft_type")
     private String aircraftType;

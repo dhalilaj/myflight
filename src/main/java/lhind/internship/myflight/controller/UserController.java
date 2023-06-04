@@ -5,6 +5,7 @@ import lhind.internship.myflight.exception.UserIdNotFoundExceptoin;
 import lhind.internship.myflight.exception.UserNotFoundException;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.dto.UserDto;
+import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -64,4 +65,5 @@ public class UserController {
         userService.updateUser(userDto);
         return  ResponseEntity.ok(new ResponseMsg("User updated successfully"));
     }
+
 }

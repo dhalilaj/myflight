@@ -18,4 +18,6 @@ public interface BookingService {
 
     void decline (Long id) throws BookingNotFoundException, CannotCancelBookingException;
 
+    void createBooking (BookingDto bookingDto);
+
 }

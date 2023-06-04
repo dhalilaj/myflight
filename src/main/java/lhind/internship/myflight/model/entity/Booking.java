@@ -27,7 +27,7 @@ public class Booking {
     @Column(name = "status")@NotNull@Enumerated(EnumType.STRING)
     private BookingStatus status;
     @NotNull
-    @Column(name = "booking_date")@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "booking_date")@Temporal(value = TemporalType.DATE)
     private Date bookingDate;
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

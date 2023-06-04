@@ -2,22 +2,27 @@ package lhind.internship.myflight.services.impl;
 
 import lhind.internship.myflight.converter.FlightConverter;
 import lhind.internship.myflight.converter.UserConverter;
-import lhind.internship.myflight.exception.FlightNotBookedException;
-import lhind.internship.myflight.exception.FlightNotFoudException;
+import lhind.internship.myflight.exception.*;
 import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Flight;
+import lhind.internship.myflight.model.entity.User;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import lhind.internship.myflight.repository.BookingRepository;
 import lhind.internship.myflight.repository.FlightRepository;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.FlightService;
+import org.hibernate.grammars.hql.HqlParser;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.zip.DataFormatException;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -44,15 +49,44 @@ public class FlightServiceImpl implements FlightService {
         int randomNumber = random.nextInt(900) + 100;
 
         Flight flight = new Flight();
-        flight.setFlightDate(flightDto.getFlightDate());
         flight.setFlightNumber(flightDto.getAirlineCode() + String.valueOf(randomNumber));
+
+        flight.setId(flightDto.getId());
         flight.setAircraftType(flightDto.getAircraftType());
         flight.setAirlineCode(flightDto.getAirlineCode());
-        flight.setOrigin(flightDto.getOrigin());
-        flight.setDestination(flightDto.getDestination());
-        flight.setDepartureTime(flightDto.getDepartureTime());
+
+        if (flightDto.getOrigin().equals(flightDto.getDestination())) {
+            throw new OriginAndDestinationException();
+        } else {
+            if (flightDto.getOrigin().length() != 3) {
+                throw new SetLengthException();
+            } else {
+                flight.setOrigin(flightDto.getOrigin());
+            }
+            if (flightDto.getDestination().length() != 3) {
+                throw new SetLengthException();
+            } else {
+                flight.setDestination(flightDto.getDestination());
+            }
+        }
+
+        LocalDate localDate = LocalDate.now();
+        LocalDate flightDt = flightDto.getFlightDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (localDate.equals(flightDt) || flightDt.isAfter(localDate)) {
+            flight.setFlightDate(flightDto.getFlightDate());
+        } else {
+            throw new FlightDateException();
+        }
+
+        LocalTime currentTime = LocalTime.now();
+        LocalTime timeToCompare = flightDto.getDepartureTime().toLocalTime();
+
+        if (timeToCompare.isAfter(currentTime)) {
+            flight.setDepartureTime(flightDto.getDepartureTime());
+        } else {
+            throw new DepartureTimeException();
+        }
         flight.setSeatsAvailable(flightDto.getSeatsAvailable());
-        flight.setId(flightDto.getId());
 
         this.flightRepository.save(flight);
 
@@ -111,21 +145,21 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<UserDto> findTravelerOfFlight(Long id) {
+    public List<User> findTravelerOfFlight(Long id) {
 
-
-//        List<User> userList = flightRepository.findTravelerOfFlight(id);
+        List<User> userList = flightRepository.findTravelerOfFlight(id);
 //        List<UserDto> userDtos = flightRepository.findTravelerOfFlight(id).stream()
-//                .map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
-//
-////        User user= userRepository.findById(flightRepository.findTravelerOfFlight(id)).orElseThrow(() -> new UserIdNotFoundExceptoin(flightRepository.findTravelerOfFlight(id)));
-//
-////        List<UserDto> userDtos= userRepository.findById(flightRepository.findTravelerOfFlight(id)).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
-//        if (userDtos.isEmpty()){
-//            throw new RuntimeException("");
-//        }
-//        else {return userDtos;}
-        return null;
+//                .map(userConverter::convertUserToDto).collect(Collectors.toList());
+
+//        User user= userRepository.findById(flightRepository.findTravelerOfFlight(id)).orElseThrow(() -> new UserIdNotFoundExceptoin(flightRepository.findTravelerOfFlight(id)));
+
+//        List<UserDto> userDtos= userRepository.findById(flightRepository.findTravelerOfFlight(id)).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
+        if (userList.isEmpty()) {
+            throw new RuntimeException("No Users have Booked this Flight");
+        } else {
+            return userList;
+        }
+//        return null;
     }
 
 }
