@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76f02fd2-5c1b-4c6a-bd51-31789d725505" name="Changes" comment="@PreAuthorize">
+    <list default="true" id="76f02fd2-5c1b-4c6a-bd51-31789d725505" name="Changes" comment="EXCEPTIONS STATUS">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/NoPermissionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/exception/NoPermissionException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/controller/BookingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +93,7 @@
       <workItem from="1685025990240" duration="9994000" />
       <workItem from="1685453466656" duration="6058000" />
       <workItem from="1685483912830" duration="30115000" />
-      <workItem from="1685734680159" duration="88718000" />
+      <workItem from="1685734680159" duration="90366000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <created>1685484092270</created>
@@ -173,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685953074007</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="EXCEPTIONS STATUS">
+      <created>1685955493482</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1685955493482</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +207,8 @@
     <MESSAGE value="cleanup" />
     <MESSAGE value="bookingDto" />
     <MESSAGE value="@PreAuthorize" />
-    <option name="LAST_COMMIT_MESSAGE" value="@PreAuthorize" />
+    <MESSAGE value="EXCEPTIONS STATUS" />
+    <option name="LAST_COMMIT_MESSAGE" value="EXCEPTIONS STATUS" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -211,8 +218,18 @@
           <line>54</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/lhind/internship/myflight/services/impl/BookingServiceImpl.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="bookingUser" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/myflight$MyflightApplication.ic" NAME="MyflightApplication Coverage Results" MODIFIED="1685791819769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

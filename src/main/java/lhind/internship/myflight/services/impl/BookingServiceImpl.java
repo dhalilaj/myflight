@@ -35,7 +35,6 @@ public class BookingServiceImpl implements BookingService {
     private FlightRepository flightRepository;
 
 
-
     public BookingServiceImpl(UserRepository userRepository, BookingRepository bookingRepository, BookingConverter bookingConverter, HttpServletRequest request, TokenService tokenService, FlightRepository flightRepository) {
         this.userRepository = userRepository;
         this.bookingRepository = bookingRepository;
@@ -55,22 +54,26 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void cancelBooking(Long id) throws BookingNotFoundException {
+    public void cancelBooking(Long id) throws BookingNotFoundException, NoPermissionException {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException());
 
         String headerAuth = request.getHeader("Authorization");
         String jwt = headerAuth.substring(7, headerAuth.length());
         String username = tokenService.extractUsername(jwt);
 
-        if (booking.getUser().equals(userRepository.findByUsername(username))){
+        User logedIn = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException());
+        User bookingUser = booking.getUser();
+        if (bookingUser.equals(logedIn)) {
 
-        if (booking.getStatus().equals(BookingStatus.BOOKED)) {
-            booking.setStatus(BookingStatus.CANCELLATION_REQUESTED);
-            bookingRepository.save(booking);
+            if (booking.getStatus().equals(BookingStatus.BOOKED)) {
+                booking.setStatus(BookingStatus.CANCELLATION_REQUESTED);
+                bookingRepository.save(booking);
+            } else {
+                throw new CannotCancelBookingException("Booking can not be cancelled because of invalid status: " + booking.getStatus().name());
+            }
         } else {
-            throw new CannotCancelBookingException("Booking can not be cancelled because of invalid status: " + booking.getStatus().name());
-        }}
-        else {throw new NoPermissionException();}
+            throw new NoPermissionException();
+        }
 
     }
 
@@ -93,7 +96,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException());
 
         if (booking.getStatus().equals(BookingStatus.CANCELLATION_REQUESTED)) {
-            if(StringUtils.isEmpty(reason)) {
+            if (StringUtils.isEmpty(reason)) {
                 throw new CannotCancelBookingException("Reason for declining the cancellation is missing.");
             }
             booking.setStatus(BookingStatus.CANCELLATOIN_DECLINED);

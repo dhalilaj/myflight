@@ -2,6 +2,7 @@ package lhind.internship.myflight.controller;
 
 import jakarta.validation.Valid;
 import lhind.internship.myflight.exception.BookingNotFoundException;
+import lhind.internship.myflight.exception.NoPermissionException;
 import lhind.internship.myflight.exception.UserNotFoundException;
 import lhind.internship.myflight.model.dto.*;
 import lhind.internship.myflight.services.BookingService;
@@ -27,7 +28,7 @@ public class BookingController {
 
     @PreAuthorize(value = "hasAnyRole('TRAVELLER')")
     @PutMapping("/cancel/{id}")
-    public ResponseEntity<?> requestCancellation(@PathVariable Long id) throws BookingNotFoundException {
+    public ResponseEntity<?> requestCancellation(@PathVariable Long id) throws BookingNotFoundException, NoPermissionException {
         bookingService.cancelBooking(id);
         return ResponseEntity.ok(new ResponseMsg("Booking Cancellation Request Sent!"));
     }
