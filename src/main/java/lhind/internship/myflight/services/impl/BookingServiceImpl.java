@@ -58,12 +58,19 @@ public class BookingServiceImpl implements BookingService {
     public void cancelBooking(Long id) throws BookingNotFoundException {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException());
 
+        String headerAuth = request.getHeader("Authorization");
+        String jwt = headerAuth.substring(7, headerAuth.length());
+        String username = tokenService.extractUsername(jwt);
+
+        if (booking.getUser().equals(userRepository.findByUsername(username))){
+
         if (booking.getStatus().equals(BookingStatus.BOOKED)) {
             booking.setStatus(BookingStatus.CANCELLATION_REQUESTED);
             bookingRepository.save(booking);
         } else {
             throw new CannotCancelBookingException("Booking can not be cancelled because of invalid status: " + booking.getStatus().name());
-        }
+        }}
+        else {throw new NoPermissionException();}
 
     }
 
