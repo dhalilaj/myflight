@@ -8,10 +8,12 @@ import lhind.internship.myflight.model.dto.FlightDto;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.enums.AirlineCode;
 import lhind.internship.myflight.services.FlightService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -43,9 +45,9 @@ public class FlightController {
         return ResponseEntity.ok("Flight updated successfully!");
     }
 
-    @GetMapping("/custom/{airlineCode}/{origin}/{destination}/{flightDate}")
-    public List<FlightDto> customSearch (@PathVariable AirlineCode airlineCode, String origin, String destination, Date flightDate) throws RuntimeException{
-        return  flightService.findFlightCustom( airlineCode,  origin,  destination,  flightDate);
+    @GetMapping("/customSearch")
+    public List<FlightDto> customSearch (@RequestParam String airlineCode, @RequestParam String origin, @RequestParam String destination, @RequestParam String flightDate) throws RuntimeException, ParseException {
+        return  flightService.findFlightCustom(StringUtils.isNotEmpty(airlineCode) ? AirlineCode.valueOf(airlineCode) : null,  origin,  destination,  new SimpleDateFormat("yyyy-MM-dd").parse(flightDate));
     }
 
     @GetMapping("/travellers/{id}")

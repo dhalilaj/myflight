@@ -21,15 +21,18 @@ public class User {
 
     @Column(name = "username")
     private String username;
-    @Column(name = "first_name")@NotNull
+    @Column(name = "first_name")
+    @NotNull
     private String firstName;
     @Column(name = "middle_name")
     private String middleName;
-    @Column(name = "last_name")@NotNull
+    @Column(name = "last_name")
+    @NotNull
     private String lastName;
     @Column(name = "password")
     private String password;
-    @Column(name = "email", unique = true)@NotNull
+    @Column(name = "email", unique = true)
+    @NotNull
     private String email;
     @Column(name = "phone_number")
     private Integer phoneNumber;

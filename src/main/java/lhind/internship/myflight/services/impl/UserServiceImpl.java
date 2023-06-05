@@ -3,7 +3,6 @@ package lhind.internship.myflight.services.impl;
 import lhind.internship.myflight.converter.UserConverter;
 import lhind.internship.myflight.exception.EmailAlreadyExistsException;
 import lhind.internship.myflight.exception.UserNotFoundException;
-import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Role;
 import lhind.internship.myflight.model.entity.User;
@@ -11,7 +10,6 @@ import lhind.internship.myflight.model.enums.RoleName;
 import lhind.internship.myflight.repository.RoleRepository;
 import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,21 +42,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
-        userRepository.delete(user);
-    }
-
-    @Override
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
         userRepository.delete(user);
     }
-
-//    @Override
-//    public List<UserDto> findAllByEmail(String email) {
-//        return userRepository.findAllByEmail(email).stream().map(user -> userConverter.convertUserToDto(user)).collect(Collectors.toList());
-//    }
 
     @Override
     public void createUser(UserDto userDto) {
@@ -90,26 +77,21 @@ public class UserServiceImpl implements UserService {
     public UserDto findByEmail(String email) throws UserNotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
         UserDto userDto = userConverter.convertUserToDto(user);
-
-
-//        return userRepository.findByEmail(email).map(userConverter::convertUserToDto).orElseThrow(UserNotFoundException::new);
         return userDto;
     }
 
     public void updateUser(UserDto userDto) {
-        User user = userRepository.findById(userDto.getId()).orElseThrow(() -> new UserNotFoundException());
+        User existingUser = userRepository.findById(userDto.getId()).orElseThrow(() -> new UserNotFoundException());
 
-        user = userConverter.convertUserToEntity(userDto);
+        existingUser.setFirstName(userDto.getFirstName());
+        existingUser.setMiddleName(userDto.getMiddleName());
+        existingUser.setLastName(userDto.getLastName());
+        existingUser.setRole(userDto.getRole());
+        existingUser.setUsername(userDto.getUsername());
+        existingUser.setAddress(userDto.getAddress());
+        existingUser.setEmail(userDto.getEmail());
+        existingUser.setPhoneNumber(userDto.getPhoneNumber());
 
-//        user.setFirstName(userDto.getFirstName());
-//        user.setMiddleName(userDto.getMiddleName());
-//        user.setLastName(userDto.getLastName());
-//        user.setRole(userDto.getRole());
-//        user.setUsername(userDto.getUsername());
-//        user.setAddress(userDto.getAddress());
-//        user.setEmail(userDto.getEmail());
-//        user.setPhoneNumber(userDto.getPhoneNumber());
-
-        userRepository.save(user);
+        userRepository.save(existingUser);
     }
 }

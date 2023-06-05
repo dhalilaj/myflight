@@ -128,13 +128,13 @@ public class GlobalExceptionHandler {
 //    }
 
     @ExceptionHandler(CannotCancelBookingException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ResponseEntity<BaseResponse>  cannotCancelBookingException() {
+    public ResponseEntity<BaseResponse>  cannotCancelBookingException(CannotCancelBookingException ex) {
         logger.error("Booking Cannot Be Cancelled!");
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setMessages(List.of("Booking Cannot Be Cancelled!"));
-        return ResponseEntity.status(404).body(baseResponse);
+        baseResponse.setMessages(List.of(ex.getMessage()));
+        return ResponseEntity.status(400).body(baseResponse);
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)

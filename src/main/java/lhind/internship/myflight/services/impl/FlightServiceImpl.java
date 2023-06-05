@@ -5,12 +5,9 @@ import lhind.internship.myflight.converter.UserConverter;
 import lhind.internship.myflight.exception.*;
 import lhind.internship.myflight.model.dto.DisplayUser;
 import lhind.internship.myflight.model.dto.FlightDto;
-import lhind.internship.myflight.model.dto.UserDto;
 import lhind.internship.myflight.model.entity.Flight;
 import lhind.internship.myflight.model.enums.AirlineCode;
-import lhind.internship.myflight.repository.BookingRepository;
 import lhind.internship.myflight.repository.FlightRepository;
-import lhind.internship.myflight.repository.UserRepository;
 import lhind.internship.myflight.services.FlightService;
 import org.springframework.stereotype.Service;
 
@@ -28,17 +25,11 @@ public class FlightServiceImpl implements FlightService {
     private final FlightRepository flightRepository;
     private final FlightConverter flightConverter;
 
-    private final UserRepository userRepository;
-    private final BookingRepository bookingRepository;
 
-    private final UserConverter userConverter;
 
-    public FlightServiceImpl(FlightRepository flightRepository, FlightConverter flightConverter, UserRepository userRepository, BookingRepository bookingRepository, UserConverter userConverter) {
+    public FlightServiceImpl(FlightRepository flightRepository, FlightConverter flightConverter) {
         this.flightRepository = flightRepository;
         this.flightConverter = flightConverter;
-        this.userRepository = userRepository;
-        this.bookingRepository = bookingRepository;
-        this.userConverter = userConverter;
     }
 
     @Override
@@ -110,7 +101,14 @@ public class FlightServiceImpl implements FlightService {
             flightRepository.save(flight);
         } else {
 
-            flight=flightConverter.convertFlightToEntity(flightDto);
+            flight.setFlightDate(flightDto.getFlightDate());
+            flight.setFlightNumber(flightDto.getFlightNumber());
+            flight.setAircraftType(flightDto.getAircraftType());
+            flight.setOrigin(flightDto.getOrigin());
+            flight.setDestination(flightDto.getDestination());
+            flight.setAirlineCode(flightDto.getAirlineCode());
+            flight.setDepartureTime(flightDto.getDepartureTime());
+            flight.setSeatsAvailable(flightDto.getSeatsAvailable());
 
             flightRepository.save(flight);
         }
@@ -120,7 +118,7 @@ public class FlightServiceImpl implements FlightService {
     public List<FlightDto> findFlightCustom(AirlineCode airlineCode, String origin, String destination, Date flightDate) {
         List<FlightDto> customSearch = flightRepository.findFlightCustom(airlineCode, origin, destination, flightDate).stream().map(flight -> flightConverter.convertFlightToDto(flight)).collect(Collectors.toList());
         if (customSearch.isEmpty()) {
-            throw new RuntimeException("Flight does not exist");
+            throw new FlightNotFoudException();
         } else {
             return customSearch;
         }
@@ -129,15 +127,8 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<DisplayUser> findTravelerOfFlight(Long id) {
 
-//        List<DisplayUser> userList = flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
-        return flightRepository.findTravelerOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
+        return flightRepository.findTravelersOfFlight(id).stream().map(DisplayUser::new).collect(Collectors.toList());
 
-//        if (userList.isEmpty()) {
-//            throw new FlightNotBookedException();
-//        } else {
-//            return userList;
-//        }
-//        return null;
     }
 
 }

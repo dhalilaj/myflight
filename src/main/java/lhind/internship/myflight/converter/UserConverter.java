@@ -1,17 +1,19 @@
 package lhind.internship.myflight.converter;
 
 import lhind.internship.myflight.model.dto.UserDto;
-import lhind.internship.myflight.model.entity.Role;
 import lhind.internship.myflight.model.entity.User;
-import lhind.internship.myflight.model.enums.RoleName;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserConverter {
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UserConverter(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public UserDto convertUserToDto (User user){
         UserDto convertedUserDto = new UserDto();
         convertedUserDto.setId(user.getId());
@@ -33,7 +35,7 @@ public class UserConverter {
         convertedUser.setMiddleName(userDto.getMiddleName());
         convertedUser.setLastName(userDto.getLastName());
         convertedUser.setAddress(userDto.getAddress());
-        convertedUser.setPassword(userDto.getPassword());
+        convertedUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         convertedUser.setEmail(userDto.getEmail());
 //        convertedUser.setRole(userDto.getRole());
         convertedUser.setPhoneNumber(userDto.getPhoneNumber());

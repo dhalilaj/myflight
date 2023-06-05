@@ -24,10 +24,16 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "status")@NotNull@Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    @NotNull@Enumerated(EnumType.STRING)
     private BookingStatus status;
+
+    @Column(name = "decline_reason")
+    private String declineReason;
+
     @NotNull
-    @Column(name = "booking_date")@Temporal(value = TemporalType.DATE)
+    @Column(name = "booking_date")
+    @Temporal(value = TemporalType.DATE)
     private Date bookingDate;
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

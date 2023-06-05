@@ -11,13 +11,11 @@ import java.util.List;
 public interface BookingService {
     List<BookingDto> findBookingByUserId(Long id);
 
-    List<UserDto> findTravelerOfFlight (Long id);
-
     void cancelBooking (Long id);
 
     void approve(Long id) throws BookingNotFoundException, CannotCancelBookingException;
 
-    void decline (Long id) throws BookingNotFoundException, CannotCancelBookingException;
+    void decline (Long id, String reason) throws BookingNotFoundException, CannotCancelBookingException;
 
     void createBooking (CreateBookingRequest createBookingRequest);
 

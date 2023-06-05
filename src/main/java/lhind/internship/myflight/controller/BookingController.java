@@ -5,6 +5,7 @@ import lhind.internship.myflight.exception.BookingNotFoundException;
 import lhind.internship.myflight.exception.UserNotFoundException;
 import lhind.internship.myflight.model.dto.BookingDto;
 import lhind.internship.myflight.model.dto.CreateBookingRequest;
+import lhind.internship.myflight.model.dto.ReasonDto;
 import lhind.internship.myflight.model.dto.ResponseMsg;
 import lhind.internship.myflight.services.BookingService;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +39,9 @@ public class BookingController {
     }
 
     @PutMapping("/decline/{id}")
-    public ResponseEntity<?> declineCancellation(@PathVariable Long id, @RequestBody String reasom) throws BookingNotFoundException {
-//        String message = msg;
-        bookingService.decline(id);
-        return ResponseEntity.ok(new ResponseMsg(reasom));
-
+    public ResponseEntity<?> declineCancellation(@PathVariable Long id, @RequestBody ReasonDto reason) throws BookingNotFoundException {
+        bookingService.decline(id, reason.getReason());
+        return ResponseEntity.ok(new ResponseMsg("Booking Cancellation Declined!"));
     }
 
     @PostMapping

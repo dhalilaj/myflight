@@ -21,6 +21,7 @@ public class SecurityConfiguration {
     private static final String[] AUTH_WHITELIST = {
             "/authenticate",
             "/swagger-ui/**",
+            "/v3/api-docs/**",
             "/swagger-resources/**",
             "/api-docs/**",
             "/webjars/**"
