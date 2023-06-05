@@ -10,6 +10,7 @@ import lhind.internship.myflight.model.enums.AirlineCode;
 import lhind.internship.myflight.services.FlightService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -26,12 +27,14 @@ public class FlightController {
         this.flightService = flightService;
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createFlight(@Valid @RequestBody FlightDto flightDto){
         this.flightService.createFlight(flightDto);
         return ResponseEntity.ok(new ResponseMsg("Flight added successfully!"));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFlight(@PathVariable Long id) throws BookedFlightException {
         flightService.deleteFlight(id);
@@ -39,17 +42,20 @@ public class FlightController {
 
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updateFlight(@Valid@RequestBody FlightDto flightDto) throws BookedFlightException, FlightNotFoudException {
         flightService.updateFlight(flightDto);
         return ResponseEntity.ok("Flight updated successfully!");
     }
 
+    @PreAuthorize(value = "hasAnyRole('TRAVELLER')")
     @GetMapping("/customSearch")
     public List<FlightDto> customSearch (@RequestParam String airlineCode, @RequestParam String origin, @RequestParam String destination, @RequestParam String flightDate) throws RuntimeException, ParseException {
         return  flightService.findFlightCustom(StringUtils.isNotEmpty(airlineCode) ? AirlineCode.valueOf(airlineCode) : null,  origin,  destination,  new SimpleDateFormat("yyyy-MM-dd").parse(flightDate));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @GetMapping("/travellers/{id}")
     public List<DisplayUser> findTravelerOfFlight (@PathVariable Long id){
         return flightService.findTravelerOfFlight(id);

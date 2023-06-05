@@ -31,6 +31,7 @@ public class UserConverter {
 
     public User convertUserToEntity (UserDto userDto){
         User convertedUser = new User();
+        convertedUser.setUsername(userDto.getUsername());
         convertedUser.setFirstName(userDto.getFirstName());
         convertedUser.setMiddleName(userDto.getMiddleName());
         convertedUser.setLastName(userDto.getLastName());
