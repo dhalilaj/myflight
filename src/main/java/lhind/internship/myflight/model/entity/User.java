@@ -20,6 +20,7 @@ public class User {
     private Long id;
 
     @Column(name = "username")
+    @NotNull
     private String username;
     @Column(name = "first_name")
     @NotNull

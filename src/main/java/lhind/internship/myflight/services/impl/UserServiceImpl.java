@@ -54,17 +54,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailAlreadyExistsException();
         }
 
-//        User user = new User();
         User user = userConverter.convertUserToEntity(userDto);
-
-//        user.setUsername(userDto.getUsername());
-//        user.setPassword(encoder.encode(userDto.getPassword()));
-//        user.setEmail(userDto.getEmail());
-//        user.setFirstName(userDto.getFirstName());
-//        user.setMiddleName(userDto.getMiddleName());
-//        user.setLastName(userDto.getLastName());
-//        user.setAddress(userDto.getAddress());
-//        user.setPhoneNumber(userDto.getPhoneNumber());
 
         Set<Role> roles = new HashSet<>(Arrays.asList(roleRepository.findByCode(RoleName.TRAVELLER).get()));
 

@@ -149,4 +149,14 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ResponseEntity<BaseResponse>  usernameAlreadyExistsException() {
+        logger.error("User with this username already exists!");
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setMessages(List.of("User with this username already exists!"));
+        return ResponseEntity.status(400).body(baseResponse);
+    }
+
 }
