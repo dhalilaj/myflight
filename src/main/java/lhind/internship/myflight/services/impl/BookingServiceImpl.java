@@ -5,6 +5,7 @@ import lhind.internship.myflight.converter.BookingConverter;
 import lhind.internship.myflight.exception.*;
 import lhind.internship.myflight.model.dto.BookingDto;
 import lhind.internship.myflight.model.dto.CreateBookingRequest;
+import lhind.internship.myflight.model.dto.DisplayBookingsDto;
 import lhind.internship.myflight.model.entity.Booking;
 import lhind.internship.myflight.model.entity.Flight;
 import lhind.internship.myflight.model.entity.User;
@@ -34,6 +35,7 @@ public class BookingServiceImpl implements BookingService {
     private FlightRepository flightRepository;
 
 
+
     public BookingServiceImpl(UserRepository userRepository, BookingRepository bookingRepository, BookingConverter bookingConverter, HttpServletRequest request, TokenService tokenService, FlightRepository flightRepository) {
         this.userRepository = userRepository;
         this.bookingRepository = bookingRepository;
@@ -44,12 +46,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDto> findBookingByUserId(Long id) throws UserNotFoundException {
+    public List<DisplayBookingsDto> findBookingByUserId(Long id) throws UserNotFoundException {
 
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
 
-        List<BookingDto> bookingDto = bookingRepository.findByUser(user).stream().map(booking -> bookingConverter.convertBookingToDto((booking))).collect(Collectors.toList());
-        return bookingDto;
+        List<DisplayBookingsDto> displayBookingsDtos = bookingRepository.findByUser(user).stream().map(DisplayBookingsDto::new).collect(Collectors.toList());
+        return displayBookingsDtos;
     }
 
     @Override

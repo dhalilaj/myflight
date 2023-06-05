@@ -3,10 +3,7 @@ package lhind.internship.myflight.controller;
 import jakarta.validation.Valid;
 import lhind.internship.myflight.exception.BookingNotFoundException;
 import lhind.internship.myflight.exception.UserNotFoundException;
-import lhind.internship.myflight.model.dto.BookingDto;
-import lhind.internship.myflight.model.dto.CreateBookingRequest;
-import lhind.internship.myflight.model.dto.ReasonDto;
-import lhind.internship.myflight.model.dto.ResponseMsg;
+import lhind.internship.myflight.model.dto.*;
 import lhind.internship.myflight.services.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +19,7 @@ public class BookingController {
     }
 
     @GetMapping("/ofUser/{id}")
-    public List<BookingDto> findUserBookings(@PathVariable Long id) throws UserNotFoundException {
+    public List<DisplayBookingsDto> findUserBookings(@PathVariable Long id) throws UserNotFoundException {
         return bookingService.findBookingByUserId(id);
     }
 
